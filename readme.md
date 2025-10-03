@@ -1,6 +1,6 @@
 # Shadow Tools - A Modern Calculator Suite for Trove
 
-![Shadow Tools](https://ibb.co/KxHGkXHC)
+![Shadow Tools]([https://ibb.co/KxHGkXHC](https://i.ibb.co/gZC7p3Cs/logo.png))
 
 **Shadow Tools** is a completely redesigned collection of web-based tools, calculators, and simulators for the MMORPG *Trove*. The project has been modernized from the ground up to provide players with a fast, responsive, and intuitive interface, delivered as a modern Single-Page Application (SPA).
 
@@ -24,11 +24,7 @@ All functionality is accessible from a single dashboard and opens in modal windo
 *   **🔸 Power Rank Calculator (WIP)**: A comprehensive tool to calculate your Power Rank, accounting for gear, gems, dragons, mastery, and more.
 *   **🔹 Trunk Drop Calculator**: A simulator based on binomial distribution to predict resource drops from Delve Trunks or to calculate how many trunks you need to open for a target amount of items with a given confidence level.
 *   **🔹 Challenge Spinner**: I made this just for fun. A wheel of random in-game challenges to spice up your gameplay.
-
-### ❤️ Info
-
-*   **Special Thanks**: My beloved supporters! A page to acknowledge the awesome people who contributed to this project.
-
+*   
 ---
 
 ## 🛠️ Tech Stack
@@ -54,7 +50,7 @@ Contributions are welcome! If you find a bug, have an idea for a new calculator/
 
 ---
 
-## 🙏 Special Thanks
+## 🔥 Special Thanks
 
 This project would not have been possible without the help and support of the community. Thank you to:
 
@@ -71,5 +67,6 @@ This project would not have been possible without the help and support of the co
 ---
 
 ## 📜 License
+
 
 This project is distributed under the MIT License. See the `LICENSE` file for more information.
