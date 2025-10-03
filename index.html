@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shadow Tools</title>
+  <link rel="icon" type="image/x-icon" href="img/ganda.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+  
+  <header class="site-header">
+    <img src="img/logo.png" class="header-logo" alt="Logo"> 
+    <h1>Shadow Tools</h1>
+    <p>Calculators and utils for Trove v3</p>
+	<p>by Glyba (EatherBone)</p>
+  </header>
+
+  <main class="dashboard-grid">
+    <!-- Main Calculators -->
+    <div class="tool-card" data-target="dragonCalc">
+      <img src="img/coin.png" class="card-icon" alt="Dragon Coin">
+      <h3>Dragon Coin Calculator</h3>
+      <p>Feel time-gated? There's more.</p>
+    </div>
+    <div class="tool-card" data-target="depthsCalc">
+      <img src="img/core.png" class="card-icon" alt="Depths Core">
+      <h3>Depths Core Calculator</h3>
+      <p>Caltulate vaults.</p>
+    </div>
+    <div class="tool-card" data-target="cubitCalc">
+      <img src="img/cubit.png" class="card-icon" alt="Cubit">
+      <h3>Cubit & Dragonite Calc</h3>
+      <p>Daily bonus calculator.</p>
+    </div>
+    <div class="tool-card" data-target="depthsSoulCalc">
+      <img src="img/depths.png" class="card-icon" alt="Depths Soul">
+      <h3>Depths Souls Calculator</h3>
+      <p>Calculate estimated runs for your goal.</p>
+    </div>
+    <div class="tool-card" data-target="roiCalc">
+      <img src="img/flux.png" class="card-icon" alt="Flux">
+      <h3>Market ROI Calculator</h3>
+      <p>Wanna flip?</p>
+    </div>
+    <div class="tool-card" data-target="venturineCalc">
+      <img src="img/venturine.png" class="card-icon" alt="Venturine">
+      <h3>Venturine Calculator</h3>
+      <p>Fluxion approves.</p>
+    </div>
+    <div class="tool-card" data-target="trunkDropCalc">
+      <img src="img/trunk.png" class="card-icon" alt="Trunk">
+      <h3>Trunk Drops Calculator</h3>
+      <p>No RNG allowed.</p>
+    </div>
+    <div class="tool-card" data-target="gem-augment-calculator">
+      <img src="img/gem.png" class="card-icon" alt="Gem">
+      <h3>Gem Augment Calculator</h3>
+      <p>Calculate amount of focuses.</p>
+    </div>
+    <div class="tool-card" data-target="pr">
+      <img src="img/pr.png" class="card-icon" alt="Power Rank">
+      <h3>Power Rank Calculator</h3>
+      <p>WIP.</p>
+    </div>
+    
+    <!-- Fun Stuff & Info -->
+    <div class="tool-card" data-target="challengeSpinner">
+      <img src="img/spinner.png" class="card-icon" alt="Spinner">
+      <h3>Challenge Spinner</h3>
+      <p>I made this just for fun.</p>
+    </div>
+    <div class="tool-card" data-target="thanks">
+      <img src="img/bench.png" class="card-icon" alt="Thanks">
+      <h3>Special Thanks!</h3>
+      <p>My beloved supporters!</p>
+    </div>
+  </main>
+  
+  <!-- MODAL STRUCTURE -->
+  <div id="toolModal" class="modal-container">
+    <div class="modal-content">
+      <button id="modalCloseBtn" class="modal-close-btn">&times;</button>
+      <div id="modalBody" class="modal-body">
+        <!-- Calculator content will be injected here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- GEM SELECTION MODAL (Nested) -->
+<div id="gemSelectModal" class="modal-container">
+  <div class="modal-content modal-content-sm">
+    <button id="gemModalCloseBtn" class="modal-close-btn">&times;</button>
+    <h3 id="gemModalTitle">Edit Gem Levels</h3>
+    <input type="hidden" id="currentGemType" value="">
+
+    <div class="gem-level-group">
+      <label>Empowered Gem Level:</label>
+      <div id="emp_gem_levels" class="level-buttons-container"></div>
+    </div>
+    <div class="gem-level-group">
+      <label>Lesser Gem 1 Level:</label>
+      <div id="lesser_gem1_levels" class="level-buttons-container"></div>
+    </div>
+    <div class="gem-level-group">
+      <label>Lesser Gem 2 Level:</label>
+      <div id="lesser_gem2_levels" class="level-buttons-container"></div>
+    </div>
+
+    <button id="saveGemLevelsBtn" class="toggle-switch">Save & Recalculate</button>
+  </div>
+</div>
+
+  <!-- HIDDEN CALCULATOR PANELS -->
+  <div id="tool-panels" style="display: none;">
+    
+	<div id="dragonCalc" class="calc-panel">
+  <div class="container">
+    <h2>Dragon Coin Calculator</h2>
+
+    <div class="form-group-radios">
+      <label><input type="radio" name="calcModeModal" value="hoursToCoins" checked /> Calculate coins from hours</label>
+      <label><input type="radio" name="calcModeModal" value="coinsToHours" /> Calculate hours from coins</label>
+    </div>
+
+    <!-- Mode 1: Hours to Coins -->
+    <div id="hoursToCoinsInputsModal">
+      <div class="form-group">
+        <label for="averageHoursModal">Or enter average hours per day:</label>
+        <input type="number" id="averageHoursModal" min="0" max="24" placeholder="e.g., 4" />
+      </div>
+      <button type="button" id="toggleModeBtnModal" class="toggle-secondary">Switch to manual input</button>
+      
+      <div id="manualInputsModal" style="display:none;">
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="form-group"><label for="mondayModal">Monday</label><input type="number" id="mondayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="tuesdayModal">Tuesday</label><input type="number" id="tuesdayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="wednesdayModal">Wednesday</label><input type="number" id="wednesdayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="thursdayModal">Thursday</label><input type="number" id="thursdayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="fridayModal">Friday</label><input type="number" id="fridayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="saturdayModal">Saturday</label><input type="number" id="saturdayModal" min="0" max="24"/></div>
+            <div class="form-group"><label for="sundayModal">Sunday</label><input type="number" id="sundayModal" min="0" max="24"/></div>
+        </div>
+      </div>
+
+      <div class="form-group-checkbox-group">
+        <div class="form-group-checkbox"><input type="checkbox" id="tome1Modal" /><label for="tome1Modal">Tome 1 Reward (+15)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="tome2Modal" /><label for="tome2Modal">Tome 2 Reward (+25)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="benchModal" /><label for="benchModal">Bomber Bench (+15)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="patronModal" /><label for="patronModal">Patron status (x3 on Friday)</label></div>
+      </div>
+      <button id="calculateBtnModal" class="toggle-switch">Calculate</button>
+    </div>
+
+    <!-- Mode 2: Coins to Hours -->
+    <div id="coinsToHoursInputsModal" style="display:none;">
+      <div class="form-group">
+        <label for="desiredCoinsModal">Enter desired Dragon Coins:</label>
+        <input type="number" id="desiredCoinsModal" min="0" placeholder="e.g., 1500" />
+      </div>
+      <div class="form-group-checkbox-group">
+        <div class="form-group-checkbox"><input type="checkbox" id="tome1_bModal" /><label for="tome1_bModal">Tome 1 Reward (+15)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="tome2_bModal" /><label for="tome2_bModal">Tome 2 Reward (+25)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="bench_bModal" /><label for="bench_bModal">Bomber Bench (+15)</label></div>
+        <div class="form-group-checkbox"><input type="checkbox" id="patron_bModal" /><label for="patron_bModal">Patron status (x3 on Friday)</label></div>
+      </div>
+      <button id="calculateBtn_bModal" class="toggle-switch">Estimate Hours</button>
+    </div>
+
+    <div id="resultModal" class="result-area"></div>
+    <div id="detailsModal" class="result-details"></div>
+  
+  </div>
+</div>
+	
+	
+    <div id="depthsCalc" class="calc-panel">
+  <div class="container">
+    <h2>Depths Core Calculator</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="desiredCoresModal">Desired Depths Cores:</label>
+        <input type="number" id="desiredCoresModal" min="1" placeholder="e.g., 50">
+      </div>
+      <div class="form-group">
+        <label for="sparkKeysModal">Sparkling Keys to Use:</label>
+        <input type="number" id="sparkKeysModal" min="0" value="0">
+      </div>
+    </div>
+    <button id="calculateDepthsBtnModal" class="toggle-switch">Calculate</button>
+    <div id="depthsResultModal" class="result-area"></div>
+    <img src="img/core.png" alt="Depths Core" class="depths-image" />
+  </div>
+</div>
+
+
+    <div id="cubitCalc" class="calc-panel">
+  <div class="container">
+    <h2>Cubit & Diamond Dragonite Calculator</h2>
+    <div class="form-group-radios">
+      <label><input type="radio" name="cubitModeModal" value="daysToRewards" checked> Calculate rewards from days</label>
+      <label><input type="radio" name="cubitModeModal" value="rewardsToDays"> Calculate days from rewards</label>
+    </div>
+
+    <!-- Mode 1: Days to Rewards -->
+    <div id="daysToRewardsInputsModal">
+      <div class="form-group full-width">
+        <label for="cubitDaysModal">Number of days:</label>
+        <input type="number" id="cubitDaysModal" min="1" placeholder="e.g., 30">
+      </div>
+    </div>
+
+    <!-- Mode 2: Rewards to Days -->
+    <div id="rewardsToDaysInputsModal" style="display:none;">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="desiredCubitModal">Desired Cubits:</label>
+          <input type="number" id="desiredCubitModal" min="0" placeholder="e.g., 27000">
+        </div>
+        <div class="form-group">
+          <label for="desiredDragoniteModal">Desired Diamond Dragonite:</label>
+          <input type="number" id="desiredDragoniteModal" min="0" placeholder="e.g., 150">
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group-checkbox-group">
+        <div class="form-group-checkbox">
+            <input type="checkbox" id="patron_cubitModal">
+            <label for="patron_cubitModal">Patron status (x3 rewards)</label>
+        </div>
+        <div class="form-group-checkbox" id="doubleStarWeekContainerModal">
+    <input type="checkbox" id="doubleStarWeekModal">
+    <label for="doubleStarWeekModal">Double Star Bar Week (x2 rewards)</label>
+</div>
+    </div>
+
+    <button id="calculateCubitBtnModal" class="toggle-switch">Calculate</button>
+    <div id="cubitResultModal" class="result-area"></div>
+    <img src="img/cubit.png" alt="Cubit Dragonite" class="depths-image" />
+  </div>
+</div>
+
+
+<div id="depthsSoulCalc" class="calc-panel">
+  <div class="container">
+    <h2>Depths Souls Calculator</h2>
+    <div class="form-group-radios">
+      <label><input type="radio" name="soulsModeModal" value="default" checked> Standard run (170–179)</label>
+      <label><input type="radio" name="soulsModeModal" value="custom"> Custom run (enter depth)</label>
+    </div>
+    
+    <div id="customDepthInputModal" class="form-group full-width" style="display:none;">
+      <label for="customDepthModal">Enter depth floor reached:</label>
+      <input type="number" id="customDepthModal" min="170" placeholder="e.g., 210">
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="desiredSoulsModal">Desired Depths Souls:</label>
+        <input type="number" id="desiredSoulsModal" min="1" placeholder="e.g., 500">
+      </div>
+      <div class="form-group">
+        <label for="sparklingKeysModal">Sparkling Keys to use:</label>
+        <input type="number" id="sparklingKeysModal" min="0" value="0">
+      </div>
+    </div>
+    
+    <div class="form-group-checkbox-group">
+      <div class="form-group-checkbox">
+        <input type="checkbox" id="isMondayModal">
+        <label for="isMondayModal">Monday Bonus (Delve Day)</label>
+      </div>
+      <div class="form-group-checkbox">
+        <input type="checkbox" id="patronStatusModal">
+        <label for="patronStatusModal">Patron Status (x3 on Monday)</label>
+      </div>
+    </div>
+
+    <button id="calculateSoulsBtnModal" class="toggle-switch">Calculate</button>
+    <div id="soulsResultModal" class="result-area"></div>
+    <img src="img/depths.png" alt="Depths Souls" class="depths-image" />
+  </div>
+</div>
+	
+	
+<div id="roiCalc" class="calc-panel">
+  <div class="container">
+    <!-- Этот заголовок будет автоматически скрыт в модальном окне -->
+    <h2>Market Flipping ROI Calculator</h2>
+    
+    <!-- Новая структура для полей ввода -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="buyPriceModal">Buy Price (per item):</label>
+        <input type="number" id="buyPriceModal" placeholder="e.g., 1000">
+      </div>
+      <div class="form-group">
+        <label for="sellPriceModal">Sell Price (per item):</label>
+        <input type="number" id="sellPriceModal" placeholder="e.g., 1200">
+      </div>
+      <div class="form-group full-width">
+        <label for="quantityModal">Quantity:</label>
+        <input type="number" id="quantityModal" value="1" placeholder="e.g., 50">
+      </div>
+    </div>
+    
+    <div class="form-group-checkbox">
+      <input type="checkbox" id="useTaxModal" checked>
+      <label for="useTaxModal">Include 10% Tax</label>
+    </div>
+
+    <button id="calculateRoiBtnModal" class="toggle-switch">Calculate</button>
+    <div id="roiResultModal" class="result-panel result-area"></div>
+    
+    <img src="img/flux.png" class="depths-image" alt="Flux Icon" />
+  </div>
+</div>
+
+
+    <div id="venturineCalc" class="calc-panel">
+  <div class="container">
+    <h2>Venturine Calculator</h2>
+    
+    <div class="form-group-radios vertical">
+      <label><input type="radio" name="venturineModeModal" value="v2s" checked /> Venturine → Signets</label>
+      <label><input type="radio" name="venturineModeModal" value="s2v" /> Signets → Venturine</label>
+      <label><input type="radio" name="venturineModeModal" value="continue" /> Continue from 'x' Craft</label>
+      <label><input type="radio" name="venturineModeModal" value="fromCost" /> Start from Cost</label>
+    </div>
+
+    <!-- Mode 1 -->
+    <div id="v2sBlockModal" class="form-group">
+      <label for="venturineInputModal">Amount of Venturine:</label>
+      <input type="number" id="venturineInputModal" min="0" placeholder="Enter Venturine amount" />
+    </div>
+
+    <!-- Mode 2 -->
+    <div id="s2vBlockModal" class="form-group" style="display: none;">
+      <label for="signetInputModal">Desired Signets:</label>
+      <input type="number" id="signetInputModal" min="0" placeholder="Enter number of Signets" />
+    </div>
+
+    <!-- Mode 3 -->
+    <div id="continueBlockModal" style="display: none;">
+        <div class="form-group">
+            <label for="currentCraftModal">Current Craft Number (e.g. 8):</label>
+            <input type="number" id="currentCraftModal" min="0" placeholder="Enter current craft number" />
+        </div>
+        <div class="form-group">
+            <label for="desiredSignetsModal">Desired Signets:</label>
+            <input type="number" id="desiredSignetsModal" min="1" placeholder="Enter number of Signets to craft" />
+        </div>
+    </div>
+
+    <!-- Mode 4 -->
+    <div id="fromCostBlockModal" style="display: none;">
+        <div class="form-group">
+            <label for="currentCostModal">Current Craft Cost (e.g. 9):</label>
+            <input type="number" id="currentCostModal" min="7" placeholder="Enter current cost per craft" />
+        </div>
+        <div class="form-group">
+            <label for="signetsFromCostModal">Desired Signets:</label>
+            <input type="number" id="signetsFromCostModal" min="1" placeholder="Enter number of Signets to craft" />
+        </div>
+    </div>
+
+    <button id="calculateVenturineBtnModal" class="toggle-switch">Calculate</button>
+    <div id="venturineResultModal" class="result-area"></div>
+    <img src="img/venturine.png" class="depths-image" alt="Venturine Icon" />
+  </div>
+</div>
+
+
+    <div id="trunkDropCalc" class="calc-panel">
+  <div class="container">
+    <h2>Trunk Drop Calculator</h2>
+
+    <p style="text-align: center; color: var(--text-secondary); margin-top: -1rem; margin-bottom: 1.5rem;">Select resources to include in calculation:</p>
+    <div class="resource-icons">
+      <button class="resource-button active" data-value="souls"><img src="img/depths.png" alt="Depths Souls"></button>
+      <button class="resource-button active" data-value="core"><img src="img/core.png" alt="Depths Core"></button>
+      <button class="resource-button" data-value="fishBone"><img src="img/fishbone.png" alt="Fish Bone"></button>
+      <button class="resource-button" data-value="runicEssence"><img src="img/runic.png" alt="Runic Essence"></button>
+      <button class="resource-button" data-value="depthsSand"><img src="img/sand.png" alt="Depths Sand"></button>
+      <button class="resource-button" data-value="zephyrEssence"><img src="img/zephyr.png" alt="Zephyr Essence"></button>
+      <button class="resource-button" data-value="pyricEssence"><img src="img/pyric.png" alt="Pyric Essence"></button>
+      <button class="resource-button" data-value="abyssalEssence"><img src="img/abyssal.png" alt="Abyssal Essence"></button>
+      <button class="resource-button" data-value="inkBladder"><img src="img/ink.png" alt="Ink Bladder"></button>
+    </div>
+
+    <div class="form-group-radios">
+      <label><input type="radio" name="calcModeTrunkModal" value="trunksNeeded" checked> Calculate trunks needed</label>
+      <label><input type="radio" name="calcModeTrunkModal" value="itemsExpected"> Calculate items expected</label>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="trunkInputModal" id="trunkInputLabelModal">Enter Desired Amount:</label>
+        <input type="number" id="trunkInputModal" min="0" placeholder="e.g. 20" />
+      </div>
+      <div class="form-group">
+        <label for="trunkConfidenceModal">Confidence (%):</label>
+        <input type="number" id="trunkConfidenceModal" min="50" max="99.9" value="90" step="0.1" />
+      </div>
+    </div>
+
+    <button class="toggle-switch" id="calculateTrunkBtnModal">Calculate</button>
+    <div id="trunkResultModal" class="result-area"></div>
+    <img src="img/trunk.png" class="depths-image" alt="Trunk Icon" />
+  </div>
+</div>
+
+<div id="gem-augment-calculator" class="calc-panel">
+  <div class="container">
+    <h2>Gem Augment Calculator</h2>
+    <img src="img/gem.png" alt="Gem Image" class="gem-image-augment">
+
+    <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem; align-items: start;">
+        <!-- Stat 1 -->
+        <div class="stat-group" data-stat="1">
+            <label>Stat 1</label>
+            <div class="boost-circles">
+                <svg class="boost-circle" data-boost="1"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="2"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="3"><circle cx="10" cy="10" r="8"/></svg>
+            </div>
+            <input type="number" class="stat-percent" placeholder="%" min="0" max="100" />
+        </div>
+        <!-- Stat 2 -->
+        <div class="stat-group" data-stat="2">
+            <label>Stat 2</label>
+            <div class="boost-circles">
+                <svg class="boost-circle" data-boost="1"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="2"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="3"><circle cx="10" cy="10" r="8"/></svg>
+            </div>
+            <input type="number" class="stat-percent" placeholder="%" min="0" max="100" />
+        </div>
+        <!-- Stat 3 -->
+        <div class="stat-group" data-stat="3">
+            <label>Stat 3</label>
+            <div class="boost-circles">
+                <svg class="boost-circle" data-boost="1"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="2"><circle cx="10" cy="10" r="8"/></svg>
+                <svg class="boost-circle" data-boost="3"><circle cx="10" cy="10" r="8"/></svg>
+            </div>
+            <input type="number" class="stat-percent" placeholder="%" min="0" max="100" />
+        </div>
+    </div>
+    
+    <div class="form-group full-width" style="margin-top: 1rem;">
+      <label for="augment-type-modal">Focus Type:</label>
+      <select id="augment-type-modal">
+        <option value="rough">Builder's Rough Focus</option>
+        <option value="precise">Builder's Precise Focus</option>
+        <option value="superior">Builder's Superior Focus</option>
+      </select>
+    </div>
+
+    <button id="calculate-augment-modal" class="toggle-switch">Calculate</button>
+    <div id="augment-result-modal" class="result-area"></div>
+  </div>
+</div>
+
+    <div id="pr" class="calc-panel">
+  <div class="container">
+    <h2>Power Rank Calculator <small>(WIP)</small></h2>
+    <div class="form-grid" style="grid-template-columns: 1fr 1fr; align-items: start;">
+      <!-- Column 1: General & Selections -->
+      <div class="form-group full-width" style="grid-column: 1 / -1;">
+        <h4>Base Stats</h4>
+        <div class="form-group-checkbox-group horizontal">
+          <div class="form-group-checkbox"><input type="checkbox" id="level30Modal" checked><label for="level30Modal">Level 30 (+450)</label></div>
+          <div class="form-group-checkbox"><input type="checkbox" id="subclassModal" checked><label for="subclassModal">Max Subclass (+90)</label></div>
+          <div class="form-group-checkbox"><input type="checkbox" id="emblemsModal" checked><label for="emblemsModal">Flask/Emblems (+150)</label></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="torchModal">Torch / Banner:</label>
+        <select id="torchModal"><option value="0">None</option><option value="350" selected>Permanent (+350)</option><option value="300">Weekly (+300)</option></select>
+      </div>
+      <div class="form-group">
+        <label for="ringModal">Ring:</label>
+        <select id="ringModal"><option value="0">None</option><option value="1513" selected>Crystal 4 (+1513)</option></select>
+      </div>
+      <div class="form-group">
+        <label for="allyModal">Ally:</label>
+        <select id="allyModal"><option value="0">None</option><option value="5">5 PR</option><option value="20">20 PR</option><option value="75" selected>75 PR</option></select>
+      </div>
+       <div class="form-group">
+        <label for="dragonsModal">Dragons (not primordial):</label>
+        <input type="number" id="dragonsModal" min="0" value="0">
+      </div>
+
+      <!-- Column 2: Mastery & Gear -->
+      <div class="form-group full-width" style="grid-column: 1 / -1;">
+         <h4>Gear</h4>
+         <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="form-group"><label for="gear_faceModal">Face</label><select id="gear_faceModal"><option value="1787" selected>C5</option><option value="1698">C4</option><option value="1430">C1</option></select></div>
+            <div class="form-group"><label for="gear_weaponModal">Weapon</label><select id="gear_weaponModal"><option value="1787" selected>C5</option><option value="1698">C4</option><option value="1430">C1</option></select></div>
+            <div class="form-group"><label for="gear_hatModal">Hat</label><select id="gear_hatModal"><option value="1787" selected>C5</option><option value="1698">C4</option><option value="1430">C1</option></select></div>
+        </div>
+      </div>
+       <div class="form-group"><label for="masteryModal">Mastery Level:</label><input type="number" id="masteryModal" min="0" value="500"></div>
+      <div class="form-group"><label for="geodeModal">Geode Mastery:</label><input type="number" id="geodeModal" min="0" value="0"></div>
+    </div>
+
+    <!-- Gems & Dragons -->
+    <h4 style="margin-top: 2rem;">Crystal Gems & Primordial Dragons</h4>
+    <p class="subtitle">Click on a gem to edit its levels. Click on a dragon to apply its bonus.</p>
+    <div class="gem-dragon-selectors">
+        <div class="selector-group">
+            <img src="img/gem_water.png" alt="Water Gem" class="gem-icon-pr" data-type="water">
+            <img src="img/dragon_water.png" class="dragon-btn-pr" data-type="water" title="Water Dragon">
+        </div>
+        <div class="selector-group">
+            <img src="img/gem_air.png" alt="Air Gem" class="gem-icon-pr" data-type="air">
+            <img src="img/dragon_air.png" class="dragon-btn-pr" data-type="air" title="Air Dragon">
+        </div>
+        <div class="selector-group">
+            <img src="img/gem_fire.png" alt="Fire Gem" class="gem-icon-pr" data-type="fire">
+            <img src="img/dragon_fire.png" class="dragon-btn-pr" data-type="fire" title="Fire Dragon">
+        </div>
+        <div class="selector-group">
+            <img src="img/gem_cosmic.png" alt="Cosmic Gem" class="gem-icon-pr" data-type="cosmic">
+            <img src="img/dragon_cosmic.png" class="dragon-btn-pr" data-type="cosmic" title="Cosmic Dragon">
+        </div>
+    </div>
+
+    <button id="calculatePrBtnModal" class="toggle-switch">Calculate Power Rank</button>
+    <div id="pr_resultModal" class="result-area"></div>
+  </div>
+</div>
+
+
+    <div id="challengeSpinner" class="calc-panel">
+  <div class="container">
+    <h2>Challenge Spinner</h2>
+    <div class="wheel-container">
+      <svg id="wheelModal" width="400" height="400" viewBox="0 0 500 500"></svg>
+      <div class="pointer">▼</div>
+    </div>
+    <button id="spinChallengeBtnModal" class="toggle-switch">Spin it!</button>
+    <div id="challengeResultModal" class="result-area" style="text-align: center; min-height: 50px;"></div>
+  </div>
+</div>
+
+    <div id="thanks" class="calc-panel">
+  <div class="container">
+    <h2>Special Thanks! ❤️</h2>
+    <p class="subtitle" style="text-align: center; margin-top: -1rem; margin-bottom: 2rem;">This project wouldn't be possible without the help of these awesome people.</p>
+    
+    <div class="thanks-grid">
+      <div class="thanks-card">
+        <div class="thanks-name">Ryza</div>
+        <div class="thanks-contribution">Ideas, help with improvement, early testing</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">LOWERCASED</div>
+        <div class="thanks-contribution">Early testing, help finding bugs</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">CashinClean (Ashley_Trash)</div>
+        <div class="thanks-contribution">Generating ideas, website promotion</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">kurti256</div>
+        <div class="thanks-contribution">Help with binomial distribution formula</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">Scyushi</div>
+        <div class="thanks-contribution">Website promotion on YouTube</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">Cryolitx</div>
+        <div class="thanks-contribution">Alpha tester, generating ideas</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">DogeWave</div>
+        <div class="thanks-contribution">Tester, wanted me to add electro crystal calc lol</div>
+      </div>
+      <div class="thanks-card">
+        <div class="thanks-name">AlKravesh</div>
+        <div class="thanks-contribution">Alpha tester</div>
+      </div>
+       <div class="thanks-card">
+        <div class="thanks-name">FreeDragons12</div>
+        <div class="thanks-contribution">Alpha tester</div>
+      </div>
+    </div>
+    
+    <img src="img/bench.png" class="depths-image" alt="Thanks Icon" />
+  </div>
+</div>
+  </div>
+  
+  
+
+  <!-- Скрипты -->
+  <script>
+  // menu btns
+  const switchButtons = document.querySelectorAll('.switch-btn');
+
+  // scroll up
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // SmooooooThhh
+    });
+  }
+
+  switchButtons.forEach(button => {
+    button.addEventListener('click', scrollToTop);
+  });
+</script>
+  <script>
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
+</script>
+  <!-- Вспомогательные скрипты -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="script/particles-config.js" defer></script>
+
+  <!-- Скрипты для калькуляторов -->
+  <script src="script/roi.js" defer></script>
+  <script src="script/depths-souls.js" defer></script>
+  <script src="script/dragon-calc.js" defer></script>
+  <script src="script/depths-core-calc.js" defer></script>
+  <script src="script/cubit-calc.js" defer></script>
+  <script src="script/venturine-calc.js" defer></script>
+  <script src="script/trunk-drop-calc.js" defer></script>
+  <script src="script/gem-augment-calc.js" defer></script>
+  <script src="script/pr-calc.js" defer></script>
+  <script src="script/spinner-calc.js" defer></script>
+  
+  <!-- Главный скрипт (загружается последним) -->
+  <script src="script/script.min.js" defer></script>
+
+</body>
+</html>

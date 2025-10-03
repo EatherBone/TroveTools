@@ -1,0 +1,855 @@
+/* === Base Styles === */
+:root {
+  --bg-color: #141424;
+  --surface-color: #2a2a3e;
+  --primary-color: #8a6ff6;
+  --primary-hover: #a088ff;
+  --border-color: #40405e;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0e0;
+}
+
+body {
+  font-family: 'Inter', sans-serif, Arial;
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-secondary);
+  transition: background-color 0.3s ease;
+}
+
+/* === Header === */
+.site-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.header-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+.site-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: var(--text-primary);
+}
+.site-header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* === Dashboard Grid === */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === Tool Card === */
+.tool-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+.tool-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 111, 246, 0.2);
+}
+.card-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+.tool-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+.tool-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+/* === Modal Container & Glassmorphism Effect === */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  
+  background-color: rgba(10, 10, 20, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* === Modal Content === */
+.modal-content {
+  background-color: rgba(42, 42, 62, 0.85); /* Semi-transparent background */
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 700px; /* Increased max-width */
+  max-height: 90vh;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  
+  display: flex;
+  flex-direction: column;
+
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.3s ease;
+}
+.modal-container.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.modal-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+.modal-body {
+  padding: 2.5rem;
+  overflow-y: auto;
+}
+
+/* Styles for elements INSIDE the modal */
+.modal-body .container {
+  /* Reset container styles to fit modal */
+  background: none;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  max-width: none;
+}
+
+/* === Scrollbar for Modal === */
+.modal-body::-webkit-scrollbar { width: 10px; }
+.modal-body::-webkit-scrollbar-track { background: transparent; }
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.modal-body::-webkit-scrollbar-thumb:hover { background-color: var(--primary-color); }
+
+/* === Styles for Calculators INSIDE Modal === */
+
+/* The main title inside the calculator is no longer needed, as the card/modal provides context. */
+.modal-body .container > h2 {
+  display: none;
+}
+
+/* Adjust the main calculator frame inside the modal */
+.modal-body .calculator-frame {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: rgba(0,0,0,0.15);
+}
+
+/* Make inputs and selects slightly smaller to fit better */
+.modal-body input[type="number"],
+.modal-body select {
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Buttons should not be full-width anymore */
+.modal-body .toggle-switch {
+  width: auto; /* Auto-width based on content */
+  padding: 0.7rem 2rem; /* Adjust padding */
+  margin-top: 0.5rem;
+  display: block; /* Or inline-block if you want them next to each other */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Improve result area spacing */
+.modal-body .result-area,
+.modal-body .result-panel {
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+}
+
+/* Specific tweaks for better layout */
+.modal-body #roiCalc .container {
+  max-width: 450px; /* Limit width for ROI calc for better appearance */
+}
+
+/* ROI CALC */
+
+/* === Comprehensive Form Styling for Calculators inside Modal === */
+
+/* --- Grid Layout for Forms --- */
+.modal-body .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-body .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body .form-group.full-width {
+  grid-column: 1 / -1; /* Span across all columns */
+}
+
+.modal-body .form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+/* --- Input Field Styling --- */
+.modal-body input[type="number"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: #1a1a2a; /* Dark background */
+  color: var(--text-primary);
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-body input[type="number"]::placeholder {
+  color: #6c6c8c;
+}
+
+.modal-body input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(138, 111, 246, 0.25);
+}
+
+/* --- Custom Checkbox Styling --- */
+.modal-body .form-group-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0 1.5rem 0;
+  cursor: pointer;
+}
+
+.modal-body .form-group-checkbox label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.modal-body .form-group-checkbox input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.25em;
+  height: 1.25em;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.modal-body .form-group-checkbox input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--text-primary);
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.modal-body .form-group-checkbox input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.modal-body .form-group-checkbox input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+/* --- Button Styling --- */
+.modal-body .toggle-switch {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: auto;
+  display: block;
+  margin: 1rem auto 0;
+}
+
+.modal-body .toggle-switch:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 111, 246, 0.3);
+}
+
+/* Remove old helper class styles */
+.modal-body .calculator-frame {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* === Result Panel Styling === */
+.modal-body .result-area {
+  background-color: rgba(20, 20, 34, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem 1.5rem; /* Reduced vertical padding */
+  margin-top: 2rem;
+  color: var(--text-secondary);
+  
+  /* Prepare for animation */
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.modal-body .result-area.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal-body .result-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(64, 64, 94, 0.6);
+}
+
+.modal-body .result-line:last-child {
+  border-bottom: none;
+}
+
+.modal-body .result-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.modal-body .result-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-body .result-line.final-result .result-label,
+.modal-body .result-line.final-result .result-value {
+  font-size: 1.1rem; /* Make the final ROI stand out */
+  font-weight: bold;
+}
+
+.modal-body .result-error {
+  color: #ff5555;
+  text-align: center;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+/* === Final Polish & Centering for Modal Forms === */
+
+.modal-body .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This is the key to centering everything */
+  max-width: 480px; /* Constrain width for better appearance */
+  margin: 0 auto;
+}
+
+.modal-body .form-grid,
+.modal-body .form-group-checkbox,
+.modal-body .toggle-switch,
+.modal-body .result-area {
+  width: 100%; /* Make all child elements take up the full constrained width */
+  box-sizing: border-box;
+}
+
+/* Darker, more subtle input fields */
+.modal-body input[type="number"] {
+  background-color: #1f1f34;
+  border-color: #33334a;
+}
+
+/* Polished Button Style */
+.modal-body .toggle-switch {
+  background: linear-gradient(45deg, #8a6ff6, #6c47f5);
+  box-shadow: 0 4px 15px rgba(138, 111, 246, 0.2);
+}
+.modal-body .toggle-switch:hover {
+  box-shadow: 0 6px 20px rgba(138, 111, 246, 0.3);
+}
+
+/* Ensure result area is hidden by default before animation */
+.modal-body .result-area {
+  opacity: 0;
+}
+
+/* Final additions for various calculators */
+.modal-body .form-group-radios {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+.modal-body .form-group-radios label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-body .form-group-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* === Dragon Calc Specific Styles === */
+.toggle-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: auto;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+}
+.toggle-secondary:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+.result-details {
+  background-color: rgba(20, 20, 34, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s; /* Slight delay */
+}
+.result-details.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Venturine Calc Specific Styles === */
+.modal-body .form-group-radios.vertical {
+  flex-direction: column;
+  align-items: flex-start; /* Aligns items to the left */
+  gap: 1rem;
+}
+
+.modal-body .form-group-radios.vertical label {
+  width: 100%; /* Makes the clickable area wider */
+}
+
+/* === Venturine Calculator Result Text === */
+.modal-body .venturine-result-text {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.modal-body .venturine-result-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* === Trunk Drop Calc Specific Styles === */
+.modal-body .resource-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+.modal-body .resource-button {
+  background: none;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 8px;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.modal-body .resource-button:hover {
+    border-color: var(--primary-color);
+    opacity: 0.75;
+}
+.modal-body .resource-button.active {
+  opacity: 1;
+  transform: scale(1.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(138, 111, 246, 0.4);
+}
+.modal-body .resource-button img {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+/* === Gem Augment Calc Specific Styles === */
+.modal-body .gem-image-augment {
+  display: block;
+  width: 100px;
+  margin: 0 auto 1.5rem auto;
+}
+.modal-body .stat-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.modal-body .stat-group label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+.modal-body .boost-circles {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.modal-body .boost-circle {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.modal-body .boost-circle circle {
+  fill: transparent;
+  stroke: var(--border-color);
+  stroke-width: 2;
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+.modal-body .boost-circle:hover circle {
+    stroke: var(--primary-hover);
+}
+.modal-body .boost-circle.selected circle {
+  fill: var(--primary-color);
+  stroke: var(--primary-color);
+}
+.modal-body .stat-percent {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* === General Styling for Select (Dropdown) Menus in Modal === */
+.modal-body select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  
+  border: 1px solid var(--border-color);
+  background-color: #1f1f34;
+  color: var(--text-primary);
+  border-radius: 8px;
+  
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23c0c0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-body select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(138, 111, 246, 0.25);
+}
+
+/* === Power Rank Calc Specific Styles === */
+.modal-body h4 {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.modal-body .subtitle {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+.modal-body .form-group-checkbox-group.horizontal {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+.modal-body .gem-dragon-selectors {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    grid-column: 1 / -1;
+}
+.modal-body .selector-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.modal-body .gem-icon-pr, .modal-body .dragon-btn-pr {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+.modal-body .gem-icon-pr:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+.modal-body .dragon-btn-pr {
+    opacity: 0.4;
+    border: 2px solid transparent;
+}
+.modal-body .dragon-btn-pr:hover {
+    opacity: 0.7;
+}
+.modal-body .dragon-btn-pr.selected {
+    opacity: 1;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(138, 111, 246, 0.4);
+}
+
+/* === Nested Gem Modal (Revised & Polished) === */
+#gemSelectModal {
+  z-index: 1001; /* Must be higher than the main modal */
+}
+
+/* Make the modal wider and add more padding */
+.modal-content-sm {
+  max-width: 700px; 
+  padding: 2rem 2.5rem; /* More internal space */
+}
+
+/* Style the title */
+#gemSelectModal h3 {
+    font-size: 1.6rem;
+    text-align: left;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.gem-level-group {
+  margin-bottom: 1.5rem;
+  text-align: left; /* Align labels to the left */
+}
+.gem-level-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.level-buttons-container {
+  display: grid;
+  /* A 10-column grid gives us fine control */
+  grid-template-columns: repeat(10, 1fr); 
+  gap: 0.6rem;
+}
+
+.level-btn {
+  padding: 0.6rem 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.level-btn:hover {
+  background-color: #40405e;
+  border-color: var(--primary-color);
+}
+.level-btn.selected {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-hover);
+  font-weight: 600;
+}
+
+/* Make the "None" button wider */
+.level-btn:first-child {
+    grid-column: span 2; /* Make it take up 2 columns */
+    font-weight: 600;
+}
+
+/* Style the Save button */
+#gemSelectModal .toggle-switch {
+    background: linear-gradient(45deg, #8a6ff6, #6c47f5);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(138, 111, 246, 0.2);
+}
+
+#gemSelectModal .toggle-switch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(138, 111, 246, 0.3);
+}
+
+/* === Challenge Spinner Specific Styles === */
+.modal-body .wheel-container {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto 1.5rem auto;
+}
+.modal-body #wheelModal {
+  width: 100%;
+  height: auto;
+  transform-origin: center;
+}
+.modal-body .pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: var(--primary-color);
+  text-shadow: 0 3px 5px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* === Special Thanks Page Styles === */
+.modal-body .thanks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  text-align: left;
+}
+
+.modal-body .thanks-card {
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-body .thanks-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-body .thanks-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.modal-body .thanks-contribution {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
