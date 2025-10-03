@@ -38,6 +38,13 @@ This project was intentionally built without heavy frameworks to ensure maximum 
 
 ---
 
+## 📃 Plans
+
+This project was intentionally built without heavy frameworks to ensure maximum performance and simplicity.
+
+*  🔸 Add mystic gems to Power Rank calculator
+  
+---
 ## 🤝 Contributing
 
 Contributions are welcome! If you find a bug, have an idea for a new calculator/tool, or want to improve an existing feature:
