@@ -40,7 +40,7 @@ This project was intentionally built without heavy frameworks to ensure maximum 
 
 ## 📃 Plans
 
-This project was intentionally built without heavy frameworks to ensure maximum performance and simplicity.
+Things that I can release pretty soon
 
 *  🔸 Add mystic gems to Power Rank calculator
   
