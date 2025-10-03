@@ -1,6 +1,6 @@
 # Shadow Tools - A Modern Calculator Suite for Trove
 
-![Shadow Tools]([https://ibb.co/KxHGkXHC](https://i.ibb.co/gZC7p3Cs/logo.png))
+![](https://i.ibb.co/gZC7p3Cs/logo.png) 
 
 **Shadow Tools** is a completely redesigned collection of web-based tools, calculators, and simulators for the MMORPG *Trove*. The project has been modernized from the ground up to provide players with a fast, responsive, and intuitive interface, delivered as a modern Single-Page Application (SPA).
 
@@ -70,3 +70,4 @@ This project would not have been possible without the help and support of the co
 
 
 This project is distributed under the MIT License. See the `LICENSE` file for more information.
+
