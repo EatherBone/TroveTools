@@ -14,24 +14,15 @@ All functionality is accessible from a single dashboard and opens in modal windo
 
 ### 📈 Utilities
 
-*   **🔹 Dragon Coin Calculator**: Feel time-gated? There's more. Calculate how many Dragon Coins you can earn over time, or how long it will take to reach your goal.
-*   
+*   **🔹 Trunk Drop Calculator**: A simulator based on binomial distribution to predict resource drops from Delve Trunks or to calculate how many trunks you need to open for a target amount of items with a given confidence level. 
+*   **🔹 Dragon Coin Calculator**: Feel time-gated? There's more. Calculate how many Dragon Coins you can earn over time, or how long it will take to reach your goal.   
 *   **🔹 Depths Core Calculator**: Calculate how many vaults needed for your desired number of Depths Cores.
-*   
 *   **🔹 Cubit & Dragonite Calculator**: A daily login bonus calculator. Forecast the number of Cubits and Diamond Dragonites you'll receive.
-*   
 *   **🔹 Depths Souls Calculator**: Calculate the estimated number of Delve runs required for your farming goal, factoring in Delve Day and Patron bonuses.
-*   
-*   **🔹 Market ROI Calculator**: This calculator helps you determine the Return on Investment for marketplace trading, including the 10% tax.
-*   
-*   **🔹 Venturine Calculator**: Helps calculate the Venturine cost for crafting Signets and vice-versa, featuring four flexible modes.
-*   
-*   **🔹 Gem Augment Calculator**: Find out how many focuses are needed to max out the stats on your gems.
-*   
-*   **🔸 Power Rank Calculator (WIP)**: A comprehensive tool to calculate your Power Rank, accounting for gear, gems, dragons, mastery, and more.
-*   
-*   **🔹 Trunk Drop Calculator**: A simulator based on binomial distribution to predict resource drops from Delve Trunks or to calculate how many trunks you need to open for a target amount of items with a given confidence level.
-*   
+*   **🔹 Market ROI Calculator**: This calculator helps you determine the Return on Investment for marketplace trading, including the 10% tax. 
+*   **🔹 Venturine Calculator**: Helps calculate the Venturine cost for crafting Signets and vice-versa, featuring four flexible modes. 
+*   **🔹 Gem Augment Calculator**: Find out how many focuses are needed to max out the stats on your gems. 
+*   **🔸 Power Rank Calculator (WIP)**: A comprehensive tool to calculate your Power Rank, accounting for gear, gems, dragons, mastery, and more. 
 *   **🔹 Challenge Spinner**: I made this just for fun. A wheel of random in-game challenges to spice up your gameplay.
       
 ---
