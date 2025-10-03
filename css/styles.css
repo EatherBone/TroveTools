@@ -26,7 +26,7 @@ body {
 .header-logo {
   width: 80px;
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 .site-header h1 {
   margin: 0;
@@ -852,4 +852,50 @@ body {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--text-secondary);
+}
+
+/* === Useful Links Page Styles === */
+.modal-body .useful-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.modal-body .useful-link-button {
+  display: block;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.modal-body .useful-link-button:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(138, 111, 246, 0.1);
+  color: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.modal-body .copyright-notice {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-top: 2rem;
+}
+.infopagelogo {
+  position: center;
+  width: 180px;
+  height: auto;
+}
+#links-icon {
+  transition: opacity 0.3s ease-in-out;
 }
